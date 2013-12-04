@@ -1,0 +1,62 @@
+<html>
+<head>
+	<title>Where are they now?</title>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+		
+		<link href="static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<script src="static/bootstrap/js/bootstrap.min.js"></script>
+		<script src="static/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen"></script>
+		<script type="text/javascript" src="static/group.js"></script>
+
+		<script src="static/timepicker/jquery.timepicker.js" type="text/javascript"></script>
+		<script src="static/timepicker/lib/base.js" type="text/javascript"></script>
+		<link rel="stylesheet" type="text/css" href="static/timepicker/jquery.timepicker.css">
+		<link rel="stylesheet" type="text/css" href="static/timepicker/lib/base.css">
+		<script type="text/javascript">// <![CDATA[
+        function preloader(){
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("content").style.display = "block";
+        }//preloader
+        	window.onload = preloader;
+		// ]]></script>
+		
+
+</head>
+<body>
+	<div id="loading"></div>
+	<div id="content">
+		{{class_area}}
+		{{class_is}}
+		{{study_area}}
+		{{pub_date}}
+		{{end}}
+		{{body_notes}}
+		
+		<p> db START! </p>
+		<div id="outer_box" class="row-fluid show-grid" >
+		 {% for post in posts.order_by('pub_date') %}
+		 	
+		 <br>
+		 	<div id="tr_{{post.id}}" class=" dabox col-md-12">
+		 		<strong>{{post.class_area}}</strong>
+		 		<strong>{{post.class_is}}</strong>
+		 		<br>
+		 		<p>In: {{post.study_area}}</p>
+		 		<br>
+		 		{% if post.how_many == 10 %}
+		 		Group of: {{post.how_many}}+
+		 		{%else %}
+		 		Group of: {{post.how_many}}
+		 		{% endif %}
+		 		From: {{post.pub_date.strftime('%I:%M%p')}}
+		 		To: {{post.end.strftime('%I:%M%p')}}
+		 		<br>
+		 		{{post.body_notes}}
+		 	</div>
+		 	<br>
+		 {% endfor %}
+		</div>
+	</div>
+</body>
+
+</html>
