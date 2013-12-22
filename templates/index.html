@@ -15,7 +15,7 @@
 		<link rel="stylesheet" type="text/css" href="static/timepicker/lib/base.css">
 	</head>
 	<body>
-	<div id = "outer_box" class="pagination-centered">
+	<div id = "outer_box" class=" pagination-centered">
 		<div id = "init_choice" class="pagination-centered">
 			<h3>Are you looking for a study group or are you looking for people to join yours?</h3>
 
@@ -279,6 +279,217 @@
 		</div>
 </form>
 		
+		<form name="input" method="GET" action="/checkin" >
+		<div id="what_class2" class="pagination-centered toshow">
+			<p>What subject are you studying for?</p>
+			<select id="class_selected2" name="what_class2">
+				<option value=""></option>
+				<option value="AAS">AAS - African &amp; African-American Studies</option>
+				<option value="ACC">ACC - Accounting</option>
+				<option value="ACM">ACM - Accompanying</option>
+				<option value="ACY">ACY - Accompanying Class</option>
+				<option value="AEC">AEC - Applied Economics</option>
+				<option value="AH">AH - Art &amp; Art History-Art History</option>
+				<option value="AH">AH - Art History</option>
+				<option value="ALC">ALC - Arts Leadership Curriculum</option>
+				<option value="AME">AME - Audio Music Engineering</option>
+				<option value="AMS">AMS - American Studies</option>
+				<option value="AMU">AMU - Applied Music Lessons: Summer</option>
+				<option value="ANA">ANA - Anatomy</option>
+				<option value="ANR">ANR - Anthropology</option>
+				<option value="ANT">ANT - Anthropology</option>
+				<option value="APS">APS - Applied Statistics</option>
+				<option value="ARA">ARA - Religion &amp; Classics - Arabic</option>
+				<option value="ASL">ASL - American Sign Language</option>
+				<option value="AST">AST - Astronomy</option>
+				<option value="BCH">BCH - Biochemistry</option>
+				<option value="BCS">BCS - Brain and Cognitive Sciences</option>
+				<option value="BIO">BIO - Biology</option>
+				<option value="BME">BME - Biomedical Engineering</option>
+				<option value="BPH">BPH - Biophysics</option>
+				<option value="BPP">BPP - Business Environment &amp; Public Policies</option>
+				<option value="BRN">BRN - BRN</option>
+				<option value="BSI">BSI - Behavioral Science in Industry</option>
+				<option value="BSN">BSN - Bassoon</option>
+				<option value="BST">BST - Biostatistics</option>
+				<option value="CAS">CAS - College of Arts &amp; Science</option>
+				<option value="CED">CED - CED</option>
+				<option value="CGR">CGR - Religion &amp; Classics - Classical Greek</option>
+				<option value="CHB">CHB - Chamber Music</option>
+				<option value="CHE">CHE - Chemical Engineering</option>
+				<option value="CHI">CHI - Modern Languages &amp; Cultures - Chinese</option>
+				<option value="CHM">CHM - Chemistry</option>
+				<option value="CIS">CIS - Computers &amp; Information Systems</option>
+				<option value="CL">CL - Clarinet</option>
+				<option value="CLA">CLA - Religion &amp; Classics - Classical Studies</option>
+				<option value="CLT">CLT - Modern Languages &amp; Cultures - Comparative Literature</option>
+				<option value="CMP">CMP - Composition</option>
+				<option value="CND">CND - Conducting</option>
+				<option value="CSC">CSC - Computer Science</option>
+				<option value="CSP">CSP - Clinical and Social Sciences in Psychology</option>
+				<option value="CVS">CVS - Cardiovascular Biology &amp; Disease</option>
+				<option value="CVS">CVS - Center for Visual Science</option>
+				<option value="DAN">DAN - Dance</option>
+				<option value="DBL">DBL - Double Bass</option>
+				<option value="DGD">DGD - DGD Courses</option>
+				<option value="DGD">DGD - General Dentistry</option>
+				<option value="DMS">DMS - Digital Media Studies</option>
+				<option value="DOM">DOM - Oral &amp; Maxillofacial Surgery</option>
+				<option value="DOM">DOM - Oral&amp;Max Surgery</option>
+				<option value="DOR">DOR - Orthodontics</option>
+				<option value="DPD">DPD - Pediatric Dentistry</option>
+				<option value="DPD">DPD - Pedodontics</option>
+				<option value="DPR">DPR - Periodontics</option>
+				<option value="DPS">DPS - Prosthodintics</option>
+				<option value="DTR">DTR - 2yr Training Pediatric Dentistry</option>
+				<option value="EAS">EAS - Engineering and Applied Sciences</option>
+				<option value="ECE">ECE - Electrical and Computer Engineering</option>
+				<option value="ECM">ECM - Electronic Commerce</option>
+				<option value="ECO">ECO - Economics</option>
+				<option value="ED">ED - ED Courses</option>
+				<option value="EDE">EDE - EDE Courses</option>
+				<option value="EDF">EDF - EDF Courses</option>
+				<option value="EDU">EDU - EDU Courses</option>
+				<option value="EES">EES - Earth &amp; Environmental Science</option>
+				<option value="EIC">EIC - Eastman Initiatives Curriculum</option>
+				<option value="ENG">ENG - English</option>
+				<option value="ENS">ENS - Ensemble</option>
+				<option value="ENT">ENT - Entrepreneurship</option>
+				<option value="ERG">ERG - Alternative Energy</option>
+				<option value="ESL">ESL - English as a Second Language</option>
+				<option value="ESM">ESM - Eastman School of Music</option>
+				<option value="ETH">ETH - Ethnomusicology</option>
+				<option value="EUP">EUP - Euphonium</option>
+				<option value="EXP">EXP - Executive Development Program</option>
+				<option value="FIN">FIN - Finance</option>
+				<option value="FL">FL - Flute</option>
+				<option value="FMS">FMS - Film and Media Studies</option>
+				<option value="FR">FR - French</option>
+				<option value="FR">FR - Modern Languages &amp; Cultures - French</option>
+				<option value="FS">FS - Film Studies</option>
+				<option value="FS">FS - New Department/Subject</option>
+				<option value="FWS">FWS - Freshman Writing Seminar</option>
+				<option value="GBA">GBA - General Business Administration</option>
+				<option value="GEN">GEN - Genetics</option>
+				<option value="GER">GER - German</option>
+				<option value="GER">GER - Modern Languages &amp; Cultures - German</option>
+				<option value="GPR">GPR - New Department/Subject</option>
+				<option value="GTC">GTC - Guitar Class</option>
+				<option value="GTR">GTR - Guitar</option>
+				<option value="HEB">HEB - Religion &amp; Classics - Hebrew</option>
+				<option value="HIS">HIS - History</option>
+				<option value="HLS">HLS - Health and Society</option>
+				<option value="HPC">HPC - Harpsichord</option>
+				<option value="HRN">HRN - Horn</option>
+				<option value="HRP">HRP - Harp</option>
+				<option value="HSE">HSE - HSE Courses</option>
+				<option value="HSM">HSM - Health Science Management</option>
+				<option value="HUM">HUM - Humanities</option>
+				<option value="IND">IND - Interdepartmental</option>
+				<option value="INS">INS - Institutes</option>
+				<option value="IR">IR - International Relations</option>
+				<option value="IT">IT - Italian</option>
+				<option value="IT">IT - Modern Languages &amp; Cultures - Italian</option>
+				<option value="JAZ">JAZ - Jazz Lessons</option>
+				<option value="JCM">JCM - Jazz Study &amp; Contemporary Media</option>
+				<option value="JPN">JPN - Modern Languages &amp; Cultures - Japanese</option>
+				<option value="JST">JST - Judaic Studies</option>
+				<option value="KBD">KBD - Keyboard</option>
+				<option value="LAM">LAM - Lab Animal Medicine</option>
+				<option value="LAT">LAT - Religion &amp; Classics - Latin</option>
+				<option value="LAW">LAW - Business Law</option>
+				<option value="LIN">LIN - Linguistics</option>
+				<option value="LTS">LTS - Literary Translation Studies</option>
+				<option value="LUT">LUT - Lute</option>
+				<option value="MBI">MBI - Microbiology</option>
+				<option value="ME">ME - Mechanical Engineering</option>
+				<option value="MED">MED - Medicine</option>
+				<option value="MGC">MGC - Managerial Communications</option>
+				<option value="MHB">MHB - Medical Humanities and Bioethics</option>
+				<option value="MHS">MHS - Music History</option>
+				<option value="MIF">MIF - Medical Informatics</option>
+				<option value="MKT">MKT - Marketing</option>
+				<option value="MSC">MSC - Materials Science</option>
+				<option value="MSM">MSM - Management Science Models</option>
+				<option value="MTH">MTH - Mathematics</option>
+				<option value="MUE">MUE - Music Education</option>
+				<option value="MUR">MUR - Music</option>
+				<option value="MUY">MUY - Musicology</option>
+				<option value="NAV">NAV - Naval Science</option>
+				<option value="NLX">NLX - Leadership in Health Care Systems</option>
+				<option value="NSC">NSC - Neuroscience</option>
+				<option value="NSG">NSG - Center for Lifelong Learning</option>
+				<option value="NUR">NUR - Nursing</option>
+				<option value="OB">OB - Oboe</option>
+				<option value="OMG">OMG - Operations Management</option>
+				<option value="OP">OP - Opera</option>
+				<option value="OPT">OPT - Optics</option>
+				<option value="ORB">ORB - ORB Courses</option>
+				<option value="ORC">ORC - Orchestration</option>
+				<option value="ORG">ORG - Organ</option>
+				<option value="PA">PA - Piano</option>
+				<option value="PCL">PCL - Piano Class</option>
+				<option value="PEC">PEC - Wallis Institute of Political Economics</option>
+				<option value="PED">PED - Pedagogy</option>
+				<option value="PH">PH - Public Health</option>
+				<option value="PHL">PHL - Philosophy</option>
+				<option value="PHP">PHP - Pharmacology &amp; Physiology</option>
+				<option value="PHY">PHY - Physics</option>
+				<option value="PIC">PIC - Piccolo</option>
+				<option value="PM">PM - Preventive Medicine</option>
+				<option value="POL">POL - Modern Languages &amp; Cultures - Polish</option>
+				<option value="PRC">PRC - Percussion</option>
+				<option value="PRF">PRF - Performance</option>
+				<option value="PSC">PSC - Political Science</option>
+				<option value="PSI">PSI - Psychiatry</option>
+				<option value="PSY">PSY - Psychology</option>
+				<option value="PTH">PTH - Pathology</option>
+				<option value="RAD">RAD - Radiology</option>
+				<option value="REL">REL - Religion and Classics</option>
+				<option value="RST">RST - Modern Languages &amp; Cultures - Russian Studies</option>
+				<option value="RUS">RUS - Modern Languages &amp; Cultures - Russian</option>
+				<option value="SA">SA - Art &amp; Art History-Studio Arts</option>
+				<option value="SAB">SAB - Study Abroad</option>
+				<option value="SAX">SAX - Saxophone</option>
+				<option value="SKT">SKT - Religion &amp; Classics - Sanskrit</option>
+				<option value="SMU">SMU - Sacred Music</option>
+				<option value="SOC">SOC - Sociology</option>
+				<option value="SP">SP - Modern Languages &amp; Cultures - Spanish</option>
+				<option value="STR">STR - Managerial Economics</option>
+				<option value="STR">STR - Strings</option>
+				<option value="STT">STT - Statistics</option>
+				<option value="TBA">TBA - Tuba</option>
+				<option value="TBN">TBN - Trombone</option>
+				<option value="TCS">TCS - TEAM Computer Science</option>
+				<option value="TEB">TEB - TEAM Biomedical Engineering</option>
+				<option value="TEC">TEC - TEAM Chemical Engineering</option>
+				<option value="TEE">TEE - TEAM Electrical Engineering</option>
+				<option value="TEM">TEM - New Department/Subject</option>
+				<option value="TEM">TEM - Technical Entrepreneurship Management</option>
+				<option value="TEO">TEO - TEAM Optics</option>
+				<option value="TH">TH - Theory</option>
+				<option value="TME">TME - TEAM Mechanical Engineering</option>
+				<option value="TMJ">TMJ - Temp, Bular JNT Disorder</option>
+				<option value="TMJ">TMJ - Temporomandibular Jnt Disrdr</option>
+				<option value="TOX">TOX - Toxicology</option>
+				<option value="TPT">TPT - Trumpet</option>
+				<option value="VCE">VCE - Voice</option>
+				<option value="VCL">VCL - Violoncello</option>
+				<option value="VLA">VLA - Viola</option>
+				<option value="VLN">VLN - Violin</option>
+				<option value="VSR">VSR - Visiting Student In Residence</option>
+				<option value="WLN">WLN - Wellness</option>
+				<option value="WRT">WRT - Writing Program</option>
+				<option value="WST">WST - Women's Studies</option>	
+			</select>
+		</div>
+		<div id="section_chose2" class="pagination-centered toshow">
+			<p>What section are you in?</p>
+			<input type='text' autocomplete='off' id='section' name="section_chose2" />
+			<br />
+			<button id='sub_me_lf' class="btn btn-primary btn-small pagination-centered" type="submit"> Look for a group now! </button>
+		</div>
+		</form>
 	</div>
 </body>
 

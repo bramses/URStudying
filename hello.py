@@ -1,7 +1,8 @@
 #Imports. Using Flask and subdependencies. Using SQLAlchemy for the database, and Jinja for template rendering 
-from flask import Flask, jsonify, render_template, request, g
+from flask import Flask, jsonify, render_template, request, g, flash, redirect,url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from datetime import datetime, time
+
 
 
 app = Flask(__name__) #the app initializer
@@ -10,64 +11,87 @@ app = Flask(__name__) #the app initializer
 app.config.from_object('config') #retrieves db data from the config.py file
 
 db = SQLAlchemy(app) #database for URStudy
+
+
 @app.route('/') #route to the home page (index.html)
 def initialize(): #initialization function for index.html, renders homepage
     return render_template("index.html") 
 
-@app.route('/checkin', methods=['POST']) #renders check in page (the one with the DB) by using arguments given from index.html
+@app.route('/checkin', methods=['GET','POST']) #renders check in page (the one with the DB) by using arguments given from index.html
 def checkinpage():
-	class_area = request.form.get('what_class') #requests data from form
-	class_is = request.form.get('section_chose')
-	how_many = request.form.get('how_many')
-	study_area = request.form.get('library_study')
-	pub_date = request.form.get('time_start')
-	end = request.form.get('time_end')
- 	body_notes = request.form.get('notes_section')
-	    
- 	t_start = datetime.strptime(pub_date, "%I:%M%p") #these lines turn the string representations of time into timestamp objects 
- 	t_end = datetime.strptime(end, "%I:%M%p")
- 	d_start = datetime.utcnow()
- 	the_start = d_start.replace(hour = t_start.hour, minute = t_start.minute)
- 	d_end = datetime.utcnow()
- 	the_end = d_end.replace(hour = t_end.hour, minute = t_end.minute)
- 	check = datetime.utcnow()
+	if request.method == 'POST':
+		class_area = request.form.get('what_class') #requests data from form
+		class_is = request.form.get('section_chose')
+		how_many = request.form.get('how_many')
+		study_area = request.form.get('library_study')
+		pub_date = request.form.get('time_start')
+		end = request.form.get('time_end')
+	 	body_notes = request.form.get('notes_section')
+		    
+	 	t_start = datetime.strptime(pub_date, "%I:%M%p") #these lines turn the string representations of time into timestamp objects 
+	 	t_end = datetime.strptime(end, "%I:%M%p")
+	 	d_start = datetime.utcnow()
+	 	the_start = d_start.replace(hour = t_start.hour, minute = t_start.minute)
+	 	d_end = datetime.utcnow()
+	 	the_end = d_end.replace(hour = t_end.hour, minute = t_end.minute)
+	 	check = datetime.utcnow()
 
-	post = Post(class_area, class_is, how_many, study_area, the_start, the_end, body_notes) #finally, adds to database
-	db.session.add(post)
-	db.session.commit() #commits to db
+	 	post = Post(class_area, class_is, how_many, study_area, the_start, the_end, body_notes) #finally, adds to database
+	 	duplicate_check = Post.query.filter_by( class_area = class_area ,class_is = class_is ,body_notes = body_notes).first()
 
 
-	class_id = class_area + class_is 
+	 	if(duplicate_check is None):
+			db.session.add(post)
+			db.session.commit()
+		elif(post.body_notes != duplicate_check.body_notes):
+			db.session.add(post)
+			db.session.commit() #commits to db
+		
+		class_id = class_area + class_is 
 
-	posts = Post.query.filter_by( class_area = class_area ) #only pulls up data for classes relevant to user's query
+		posts = Post.query.filter( Post.class_area == class_area , Post.class_is == class_is) #only pulls up data for classes relevant to user's query
 
-	'''posts = Post.query.filter(Post.end < datetime.utcnow())'''
+		'''posts = Post.query.filter(Post.end < datetime.utcnow())'''
 
-	#uncomment this to see debug log
-	'''
-	do_something_wrong()
-	raise
-	return 'Ohnoes' 	
-		'''
+		#uncomment this to see debug log
+		
+		
+		# do_something_wrong()
+		# raise
+		# return 'Ohnoes' 	
+		
 
-	return render_template("checkin.html",
-	 posts = posts, 
-	 class_area = class_area, 
-	 class_is = class_is,
-	 how_many = how_many,
-	 study_area = study_area,
-	 pub_date = pub_date,
-	 end = end,
-	 body_notes = body_notes
-	 )
+		return render_template("checkin.html",
+		 posts = posts, 
+		 class_area = class_area, 
+		 class_is = class_is,
+		 how_many = how_many,
+		 study_area = study_area,
+		 pub_date = pub_date,
+		 end = end,
+		 body_notes = body_notes
+		 )
 	#the method to load a page if a user doesn't want to add a DB entry, but instead see current ones (work in progress)
-@app.route('/checkin/<class_id>', methods = ['GET'])
-def show_db_data():
-	posts = Post.query.filter_by( class_area = class_area)
-	class_id = class_area + class_is
-	return render_template("checkin.html" ,class_area = class_area, class_is = class_is)
+	elif request.method == 'GET':
+		class_area = request.args.get('what_class2') #requests data from form
+		class_is = request.args.get('section_chose2')
+		posts = Post.query.filter( Post.class_area == class_area , Post.class_is == class_is) #only pulls up data for classes relevant to user's query
+		#class_id = class_area + class_is
+		'''
+		do_something_wrong()
+		raise
+		return 'Ohnoes'
+		'''
+		return render_template("checkin.html",  posts = posts, class_area = class_area, class_is = class_is)
 
 
+# @app.route('/checkin/<class_id>', methods = ['GET'])
+# def show_db_data():
+# 	class_area = request.form.get('what_class') #requests data from form
+# 	class_is = request.form.get('section_chose')
+# 	posts = Post.query.filter( Post.class_area == class_area , Post.class_is == class_is) #only pulls up data for classes relevant to user's query
+# 	class_id = class_area + class_is
+# 	return render_template("checkin.html" , posts = posts, class_area = class_area, class_is = class_is)
 
 
 

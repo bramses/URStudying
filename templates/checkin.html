@@ -25,36 +25,41 @@
 <body>
 	<div id="loading"></div>
 	<div id="content">
-		{{class_area}}
+	<!-- 	{{class_area}}
 		{{class_is}}
 		{{study_area}}
 		{{pub_date}}
 		{{end}}
-		{{body_notes}}
-		
-		<p> db START! </p>
-		<div id="outer_box" class="row-fluid show-grid" >
+		{{body_notes}} -->
+		<h2> Who's studying right now?!</h2>
+		<div class ="note_container">
+		<table id="outer_box" class="table table-striped" >
 		 {% for post in posts.order_by('pub_date') %}
-		 	
-		 <br>
-		 	<div id="tr_{{post.id}}" class=" dabox col-md-12">
-		 		<strong>{{post.class_area}}</strong>
-		 		<strong>{{post.class_is}}</strong>
-		 		<br>
-		 		<p>In: {{post.study_area}}</p>
-		 		<br>
+		 	<tr id="tr_{{post.id}}" class="  col-md-12">
+		 		<td>
+		 		<h2>
+			 		{{post.class_area}}
+			 		{{post.class_is}}
+		 		</h2>
+	
+		 		<p class="lead">In: {{post.study_area}}</p>
 		 		{% if post.how_many == 10 %}
-		 		Group of: {{post.how_many}}+
+		 		Group of: <strong>{{post.how_many}}+</strong>
 		 		{%else %}
-		 		Group of: {{post.how_many}}
+		 		Group of: <strong>{{post.how_many}}</strong>
 		 		{% endif %}
-		 		From: {{post.pub_date.strftime('%I:%M%p')}}
-		 		To: {{post.end.strftime('%I:%M%p')}}
 		 		<br>
-		 		{{post.body_notes}}
-		 	</div>
-		 	<br>
+		 		<p class="text-primary">From: {{post.pub_date.strftime('%I:%M%p')}}
+		 		To: {{post.end.strftime('%I:%M%p')}}</p>
+		 		<div class="header"><span>Expand for more info about the group!</span></div>
+			 		<p class="toshow">
+			 			{{post.body_notes}}
+			 		</p>
+
+		 		<td>
+		 	</tr>
 		 {% endfor %}
+		</table>
 		</div>
 	</div>
 </body>

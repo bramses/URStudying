@@ -7,26 +7,55 @@ $(document).ready(function () {
   var time_end;
   var notes_took;
   var which_side;
-  $("#sub_me").attr("disabled", "disabled");
 
+  $("#sub_me").attr("disabled", "disabled");
+  //$("#sub_me_lf").attr("disabled", "disabled");
+
+
+  $(".header").click(function () {
+
+    $header = $(this);
+    //getting the next element
+    $content = $header.next();
+    //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
+    $content.slideToggle(500, function () {
+        //execute this after slideToggle is done
+        //change text of header based on visibility of content div
+        $header.text(function () {
+            //change text based on condition
+            return $content.is(":visible") ? "Collapse" : "Expand for more info about the group!";
+        });
+    });
+
+});
 
 
 	$("#in_group").click( function(){
 		$("#init_choice").fadeOut(); //fades out buttons
 		$("#what_class").delay(500).fadeIn();
-		which_side = 0;
 	});
 
 	$("#lf_group").click( function(){
 		$("#init_choice").fadeOut();
-		$("#what_class").delay(500).fadeIn();
-		which_side = 1;
+		$("#what_class2").delay(500).fadeIn();
 	})
 
 	//sets up what class you're in
 	classArea = $('#class_selected option:selected').text();
 	$("#class_selected").one("change",function(){
-		$("#section_chose").fadeIn();
+			$("#section_chose").fadeIn();
+		
+	});
+
+	$("#class_selected").change(function(){
+		classArea = $('#what_class option:selected').text();
+
+	});
+
+	classArea = $('#class_selected2 option:selected').text();
+	$("#class_selected2").one("change",function(){
+			$("#section_chose2").fadeIn();
+		
 	});
 
 	$("#class_selected").change(function(){
@@ -38,6 +67,8 @@ $(document).ready(function () {
 	class_is = $('#section').val();
 	$("#section").on("input",function(){
 		$("#sub_me").removeAttr("disabled");
+		$("#sub_me_lf").removeAttr("disabled");
+
 
 	});
 	$("#section").on('input',function(){
@@ -47,11 +78,6 @@ $(document).ready(function () {
 	$("#sub_me").click( function() {
 		if ($('#section').val() == "") 
 			alert("You need to put in a section for your class!");
-		else if (which_side == 1)
-		{
-			alert('snarf ');
-			$("#check_in_button").fadeIn();
-		}
 		else 
 			$('#lib_in').fadeIn();
 	});
