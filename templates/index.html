@@ -15,7 +15,7 @@
 		<link rel="stylesheet" type="text/css" href="static/timepicker/lib/base.css">
 	</head>
 	<body>
-	<div id = "outer_box" class=" pagination-centered">
+	<div id ="outer_box" class=" pagination-centered">
 		<div id = "init_choice" class="pagination-centered">
 			<h3>Are you looking for a study group or are you looking for people to join yours?</h3>
 
@@ -231,9 +231,12 @@
 			<p>What section are you in?</p>
 			<input type='text' autocomplete='off' id='section' name="section_chose" />
 			<br />
-			<button id='sub_me' class="btn btn-primary btn-small pagination-centered" type="button"> Submit </button>
+			<button id='sub_me' class="btn btn-primary btn-small pagination-centered" type="button" > Submit </button>
+
+
+			<img id="loading" style="display: none" src="/static/img/loadingimage.gif">
 		</div>
-		
+	
 		<div id="lib_in" class='pagination-centered toshow'>
 			<p>How many people are you studying with?</p>
 			 1 <input type="radio" name="how_many" class="how_many" value=1>
@@ -258,13 +261,12 @@
 			<option value='Rush Rhees Library'>Rush Rhees</option>
 			</select><br>
 		</div>
-
+		<div id="idk"></div>
 		<div class='pagination-centered toshow' id="time_chose" name="time_chose">
-			<p>How many people are you studying with? </p>
 
 			<p id="lib_text"></p> 
-			Start: <input type='text' id='time_start' class='time ui-timepicker-input timepicker' autocomplete='off' name="time_start"> 
-			End: <input type='text' name="time_end" id='time_end' class='time ui-timepicker-input timepicker2' autocomplete='off'>
+			<input type='text' id='time_start' class='time ui-timepicker-input timepicker' autocomplete='off' name="time_start"> 
+			to <input type='text' name="time_end" id='time_end' class='time ui-timepicker-input timepicker2' autocomplete='off'>
 			<br>
 			<button id='sub_me2' class="btn btn-primary btn-small pagination-centered" type="button"> Submit </button>
 		</div>
@@ -490,7 +492,12 @@
 			<button id='sub_me_lf' class="btn btn-primary btn-small pagination-centered" type="submit"> Look for a group now! </button>
 		</div>
 		</form>
+
 	</div>
+	</div>
+	<footer class="footer">
+		<small> Made by Bram Adams <span class="glyphicon glyphicon-heart"></span>  &copy;2013</small>	
+	</footer>
 </body>
 
 
