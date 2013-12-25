@@ -13,6 +13,12 @@ Download Flask by following the instructions here: http://flask.pocoo.org/docs/i
 
 Any questions/comments/concerned should be directed to badams5@u.rochester.edu.
 
+Example shots:
+
+Welcome screen:
+![home screen]((https://raw.github.com/bramses/URStudying/urpics/Capture.jpg)
+
+
 This project is free under the MIT liscence.
 
 Thanks!
