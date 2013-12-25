@@ -16,7 +16,18 @@ Any questions/comments/concerned should be directed to badams5@u.rochester.edu.
 Example shots:
 
 Welcome screen:
-![home screen]((https://raw.github.com/bramses/URStudying/urpics/Capture.jpg)
+![home screen](https://raw.github.com/bramses/URStudying/master/urpics/Capture.JPG)
+
+Create a group:
+![make-a-group](https://raw.github.com/bramses/URStudying/master/urpics/Capture2.JPG)
+
+Example database query:
+![group-data](https://raw.github.com/bramses/URStudying/master/urpics/Capture5.JPG)
+
+Screen if there is already a group in the database:
+![already-here](https://raw.github.com/bramses/URStudying/master/urpics/Capture4.JPG)
+
+
 
 
 This project is free under the MIT liscence.
