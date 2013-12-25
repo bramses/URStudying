@@ -228,13 +228,12 @@
 			</select>
 		</div>
 		<div id="section_chose" class="pagination-centered toshow">
-			<p>What section are you in?</p>
+			<p>What section are you in? <small>Numbers only, please</small></p>
 			<input type='text' autocomplete='off' id='section' name="section_chose" />
 			<br />
 			<button id='sub_me' class="btn btn-primary btn-small pagination-centered" type="button" > Submit </button>
 
 
-			<img id="loading" style="display: none" src="/static/img/loadingimage.gif">
 		</div>
 	
 		<div id="lib_in" class='pagination-centered toshow'>
@@ -261,7 +260,8 @@
 			<option value='Rush Rhees Library'>Rush Rhees</option>
 			</select><br>
 		</div>
-		<div id="idk"></div>
+
+
 		<div class='pagination-centered toshow' id="time_chose" name="time_chose">
 
 			<p id="lib_text"></p> 
@@ -269,6 +269,12 @@
 			to <input type='text' name="time_end" id='time_end' class='time ui-timepicker-input timepicker2' autocomplete='off'>
 			<br>
 			<button id='sub_me2' class="btn btn-primary btn-small pagination-centered" type="button"> Submit </button>
+			<img id="loading" style="display: none" src="/static/img/loadingimage.gif">
+			<br>
+			<br>
+			<div id="other_groups" style="display: none" class="well">
+				
+			</div>
 		</div>
 
 		<div class='pagination-centered toshow' id="notes">
@@ -486,7 +492,7 @@
 			</select>
 		</div>
 		<div id="section_chose2" class="pagination-centered toshow">
-			<p>What section are you in?</p>
+			<p>What section are you in?<small>Numbers only, please</small></p>
 			<input type='text' autocomplete='off' id='section' name="section_chose2" />
 			<br />
 			<button id='sub_me_lf' class="btn btn-primary btn-small pagination-centered" type="submit"> Look for a group now! </button>

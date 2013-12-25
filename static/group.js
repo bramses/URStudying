@@ -24,7 +24,7 @@ $(document).ready(function () {
         //change text of header based on visibility of content div
         $header.text(function () {
             //change text based on condition
-            return $content.is(":visible") ? "Collapse" : "Expand for more info about the group!";
+            return $content.is(":visible") ? "Collapse" : "Click me to expand for more info about the group!";
         });
     });
 
@@ -168,21 +168,31 @@ $("#section").keydown(function(event) {
 
 	function check_for_entry(classArea, class_is, end)
 	{
-		alert(classArea);
-		alert(class_is);
-		alert(end);
 		classArea = classArea.split(" ");
-		//$('#loading').show();
+		//$('#other_groups').html('Checking if there are any groups for' + classArea[0] + ' ' + class_is + 'already...' + $('#loading').show());
 		$.post('/check_for_entry', {
 			classArea: classArea[0], 
 			class_is: class_is,
 			end: end
 		}).done(function(count){
-			//$('#loading').hide();
-			alert(count);
+			$('#loading').hide();
+			count = parseInt(count);
+			if( count > 0)
+			{
+				$('#other_groups').show();
+				$('#other_groups').html('There are already group(s) studying ' + classArea[0] + ' ' + class_is + 'already. Would you like to look at those groups? ');
+				$('#other_groups').append("<br><button id='sure' type='button' class='btn btn-success btn-small pagination-centered'>Sure!</button> <button id='no_thanks' type='button' class='btn btn-danger btn-small pagination-centered'>No thanks -- I'll make my own</button>");
+				$('#sure').click(function(){
+					window.location.replace('http://127.0.0.1:5000/checkin?what_class2=' + classArea[0] + '&section_chose2=' + class_is)
+				});
+				$('#no_thanks').click(function(){
+					$('#other_groups').hide()
+				});	
+			}
+
 		}).fail(function(){
 	     	$('#loading').hide();
-			alert('idk');
+			alert('Cannot connect to server');
 		});
 
 	}
