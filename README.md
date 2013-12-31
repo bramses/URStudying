@@ -12,6 +12,7 @@ together and share knowledge. I hope that URStudy can fill this gap as a service
 Download Flask by following the instructions here: http://flask.pocoo.org/docs/installation/. After downloading, simply start the app on your virtual engine, and you should be good to go! 
 
 (Edit 12/31/13: You might have a problem with the secret key and sessions. Currently looking into that.)
+
 Any questions/comments/concerned should be directed to badams5@u.rochester.edu.
 
 ##Example shots:
