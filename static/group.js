@@ -13,6 +13,46 @@ $(document).ready(function () {
   //$("#sub_me_lf").attr("disabled", "disabled");
 
 
+  
+  $('.size_change_class').click(function(){
+  	var input = $('<input />', {
+  		'type': 'text',
+  		'name': 'how_many',
+  		'id': this.id,
+  		'class': 'size_change_class',
+  		'value': $(this).html()
+  	});
+  	 $(this).parent().append(input);
+     $(this).remove();
+     input.focus();
+     if($(this).html == "0")
+     {
+     	alert("You can't have zero people in your group. Would you like to cancel your group?");
+     }
+
+     $(".size_change_class").keydown(function(event) {
+		// Allow only backspace and delete and "h" for honors courses
+		if ( event.keyCode == 46 || event.keyCode == 8 || event.keycode == 72 || event.keycode == 104) {
+			// let it happen, don't do anything
+		}
+		else {
+			// Ensure that it is a number and stop the keypress
+			if (event.keyCode < 48 || event.keyCode > 57) {
+				event.preventDefault();	
+			}	
+		}
+	});
+     /*
+     $('.size_change_class').blur( function () {
+     	
+        $(this).parent().append($('<span />').html($(this).val()));
+        $(this).remove();
+    });
+*/
+  });
+
+
+
   $(".header").click(function () {
 
     $header = $(this);
@@ -29,7 +69,23 @@ $(document).ready(function () {
     });
 
 });
+  //for cancel button in edit
+  $('.cancel_section_button').click(function(){
+  		
+  		var answer = confirm("Are you sure you want to cancel this study group session?");
+  		if(answer)
+  		{
+  			var retrieve_id = this.id.replace("button","");
+  			alert(retrieve_id);
 
+  			$('#' + retrieve_id).val("true"); //looking at button -- change to input 
+  			//$($(this).parent().parent()).html("<p class='lead'> Removed. Click Submit Edits to finalize. <a href=''>Undo</a> </p>" );
+  		}	
+  		else
+  		{
+  			//Do nothing
+  		}
+  });
 
 	$("#in_group").click( function(){
 		$("#init_choice").fadeOut(); //fades out buttons
@@ -199,3 +255,16 @@ $("#section").keydown(function(event) {
 
 });
 
+/* ---------------------------------------------------------------------------------------- */
+
+$.fn.disable = function() {
+    return this.each(function() {
+        if (typeof this.disabled != "undefined") this.disabled = true;
+    });
+}
+
+$.fn.enable = function() {
+    return this.each(function() {
+        if (typeof this.disabled != "undefined") this.disabled = false;
+    });
+}
