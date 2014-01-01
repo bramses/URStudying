@@ -18,16 +18,16 @@ Any questions/comments/concerned should be directed to badams5@u.rochester.edu.
 ##Example shots:
 
 Welcome screen:
-![home screen](https://raw.github.com/bramses/URStudying/master/urpics/Capture.JPG)
+![home screen](https://raw.github.com/bramses/URStudying/master/urpics/Capture8.JPG)
 
 Create a group:
-![make-a-group](https://raw.github.com/bramses/URStudying/master/urpics/Capture2.JPG)
+![make-a-group](https://raw.github.com/bramses/URStudying/master/urpics/Capture6.JPG)
 
 Example database query:
-![group-data](https://raw.github.com/bramses/URStudying/master/urpics/Capture5.JPG)
+![group-data](https://raw.github.com/bramses/URStudying/master/urpics/Capture7.JPG)
 
-Screen if there is already a group in the database:
-![already-here](https://raw.github.com/bramses/URStudying/master/urpics/Capture4.JPG)
+Edit screen (retrieved by session):
+![edit-screen](https://raw.github.com/bramses/URStudying/master/urpics/Capture9.JPG)
 
 
 
