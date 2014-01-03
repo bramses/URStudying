@@ -28,22 +28,24 @@
     <div id="content">
     {% if posts.count() == 0 %}
             <div class="container">
-                <h2 class="text-center">You haven't made any classes! <small class="text-center"> Would you like to start your own? <a href="http://127.0.0.1:5000/" class="text-center text-success"> Make your own group here!</a> </small></h2>
+                <h2 class="text-center">We couldn't find any groups you made under the username {{user_name}}! They may have timed out.<small class="text-center"> Would you like to start a new one? <a href="http://127.0.0.1:5000/" class="text-center text-success"> Make a group here!</a> </small></h2>
                 <br>
                 <img src="static/bootstrap/css/sad_face.jpg" alt="" class="image-responsive img-circle"></img>
                 </div>
             
     {% else %}
-    <form name="edit_submit_form" method="POST" action="/update_post">
+    <form id="edit_submit_form" name="edit_submit_form" method="POST" action="/update_post">
     <!--    {{class_area}}
         {{class_is}}
         {{study_area}}
         {{pub_date}}
         {{end}}
         {{body_notes}} -->
+        <p class='lead'>Groups made by: {{user_name}}</p>
         <div class ="note_container">
         <table id="outer_box" class="table table-striped" >
          {% for post in posts %}
+            <div id='if_cancel{{post.id}}'></div>
             <tr id="tr_{{post.id}}" class="col-md-12">
                 <td id="td_{{post.id}}">
                 <h2>
@@ -53,7 +55,7 @@
     
                 <p class="lead">In: {{post.study_area}}</p>
                 {% if post.how_many >= 10 %}
-                <p>Group of: <strong>(Click number to change group size)</strong><strong><span id="change_size{{post.id}}" class="size_change_class">{{post.how_many}}+</span></strong></p>
+                <p>Group of: <strong>(Click number to change group size)</strong><strong><span id="change_size{{post.id}}" class="size_change_class">10+</span></strong></p>
                 {% else %}
                 <p><i>Click the number to change group size </i>Group of:<strong><span id="change_size{{post.id}}" class="size_change_class" disabled="">{{post.how_many}}</span></strong></p>
 
@@ -64,7 +66,7 @@
                 <input id="cancel_section_{{post.id}}" type="hidden" class="cancel_section" name="delete" value="false" />
                 <p class="text-primary">From: {{post.pub_date.strftime('%I:%M%p')}}
                 To: {{post.end.strftime('%I:%M%p')}}</p>
-                <div class="header"><span>Click me to expand for more info about the group!</span></div>
+                <div class="header"><span>Click <strong class="text-info">me</strong> to expand for more info about the group!</span></div>
                     <p class="toshow" disabled="" style="max-width:650px">
                         {{post.body_notes}}
                     </p>
@@ -75,7 +77,7 @@
         </table>
         </div>
             <div class="pagination-centered">
-                <button id="edit_group_size_button" type="submit" class="btn btn-primary btn-large"> Submit Edits </button>
+                <button id="edit_group_button" type="submit" class="btn btn-primary btn-large"> Submit Edits </button>
             </div>
         </form>
     </div>

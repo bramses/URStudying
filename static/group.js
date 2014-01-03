@@ -12,7 +12,6 @@ $(document).ready(function () {
   $("#sub_me").attr("disabled", "disabled");
   //$("#sub_me_lf").attr("disabled", "disabled");
 
-
   
   $('.size_change_class').click(function(){
   	var input = $('<input />', {
@@ -27,7 +26,7 @@ $(document).ready(function () {
      input.focus();
      if($(this).html == "0")
      {
-     	alert("You can't have zero people in your group. Would you like to cancel your group?");
+     	alert("You can't have zero people in your group!");
      }
 
      $(".size_change_class").keydown(function(event) {
@@ -64,7 +63,7 @@ $(document).ready(function () {
         //change text of header based on visibility of content div
         $header.text(function () {
             //change text based on condition
-            return $content.is(":visible") ? "Collapse" : "Click me to expand for more info about the group!";
+            return $content.is(":visible") ? "Collapse" : "Click  me to expand for more info about the group!";
         });
     });
 
@@ -76,10 +75,14 @@ $(document).ready(function () {
   		if(answer)
   		{
   			var retrieve_id = this.id.replace("button","");
-  			alert(retrieve_id);
-
   			$('#' + retrieve_id).val("true"); //looking at button -- change to input 
-  			//$($(this).parent().parent()).html("<p class='lead'> Removed. Click Submit Edits to finalize. <a href=''>Undo</a> </p>" );
+  			$($(this).parent().parent()).remove();
+  			
+  				var elements_left = document.getElementsByTagName('tr');
+  				if(elements_left[0] == undefined)
+  					$('#edit_submit_form').trigger("submit");
+  					
+  			//.html("<p class='lead'> Removed. Click Submit Edits to finalize. <a href=''>Undo</a> </p>" );
   		}	
   		else
   		{
@@ -87,6 +90,7 @@ $(document).ready(function () {
   		}
   });
 
+  
 	$("#in_group").click( function(){
 		$("#init_choice").fadeOut(); //fades out buttons
 		$("#what_class").delay(500).fadeIn();
@@ -196,12 +200,12 @@ $(document).ready(function () {
 	$("#section").on('input',function(){
 		notes_took = $('#notes_section').val();
 	});
-
+/*
 $(function(){ //timepicker. John Thornton is a god among men. http://jonthornton.github.io/jquery-timepicker/
 	$('.timepicker').timepicker({ 'scrollDefaultNow': true });
 });
 $(function(){
-	$('.timepicker2').timepicker({ 'scrollDefaultNow': true  });
+	$('.timepicker2').timepicker({ 'scrollDefaultNow': true,   });
 });/*,'minTime': time_start, 'maxTime': final_end_duration, 'showDuration': true*/
 
 $("#section").keydown(function(event) {
@@ -221,7 +225,7 @@ $("#section").keydown(function(event) {
 	{
 		
 	});
-
+	//checks for current entries in DB for similar entries
 	function check_for_entry(classArea, class_is, end)
 	{
 		classArea = classArea.split(" ");
@@ -236,7 +240,7 @@ $("#section").keydown(function(event) {
 			if( count > 0)
 			{
 				$('#other_groups').show();
-				$('#other_groups').html('There are already group(s) studying ' + classArea[0] + ' ' + class_is + 'already. Would you like to look at those groups? ');
+				$('#other_groups').html('There are  group(s) studying ' + classArea[0] + ' ' + class_is + ' already. Would you like to look at these groups? ');
 				$('#other_groups').append("<br><button id='sure' type='button' class='btn btn-success btn-small pagination-centered'>Sure!</button> <button id='no_thanks' type='button' class='btn btn-danger btn-small pagination-centered'>No thanks -- I'll make my own</button>");
 				$('#sure').click(function(){
 					window.location.replace('http://127.0.0.1:5000/checkin?what_class2=' + classArea[0] + '&section_chose2=' + class_is)
@@ -255,16 +259,3 @@ $("#section").keydown(function(event) {
 
 });
 
-/* ---------------------------------------------------------------------------------------- */
-
-$.fn.disable = function() {
-    return this.each(function() {
-        if (typeof this.disabled != "undefined") this.disabled = true;
-    });
-}
-
-$.fn.enable = function() {
-    return this.each(function() {
-        if (typeof this.disabled != "undefined") this.disabled = false;
-    });
-}

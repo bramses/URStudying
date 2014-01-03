@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Homepage for UR Study Groups</title>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+		
+		<link href="static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<script src="static/bootstrap/js/bootstrap.min.js"></script>
+		<script src="static/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen"></script>
+		<script type="text/javascript" src="static/group.js"></script>
+
+		<script src="static/timepicker/jquery.timepicker.js" type="text/javascript"></script>
+		<script src="static/timepicker/lib/base.js" type="text/javascript"></script>
+		<link rel="stylesheet" type="text/css" href="static/timepicker/jquery.timepicker.css">
+		<link rel="stylesheet" type="text/css" href="static/timepicker/lib/base.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet" />
+		<link href="http://fonts.googleapis.com/css?family=Abel|Open+Sans:400,600" rel="stylesheet" />
+
+		 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+		<style>
+			html {
+            background: url(static/bootstrap/css/rrl8.jpg) no-repeat center center fixed; 
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        body {
+            padding-top: 20px;
+            font-size: 16px;
+            font-family: "Open Sans",serif;
+            background: transparent;
+        }
+        @import 'bootstrap.less';
+        .panel {
+            background-color: rgba(255, 255, 255, 0.9);
+            .border-radius:5px !important;
+        }
+        h1 {
+            font-family: "Abel", Arial, sans-serif;
+            font-weight: 400;
+            font-size: 49px;
+        }
+         .margin-base-vertical {
+            margin: 40px 0;
+        }
+
+		</style>
+	</head>
+	<body>
+		<div class='container'>
+			<div class='row'>
+				<div class ='col-md-6 col-md-offset-3 panel panel-default'>
+				<h1 class='margin-base-vertical text-success panel-heading'> SUCCESS!!!</h1>
+				<p class='panel-body'> Your group was recorded! Now other students can search for you and find you and your group while you are in {{study_area}}. You can edit your entry at any time<a href="http://127.0.0.1:5000/"> here.</a> </p>
+				<br>
+				<h3 class="text-success pagination-centered"> Good luck studying!!</h3>
+				</div>
+			</div>
+		</div>		
+	</body>
+</html>

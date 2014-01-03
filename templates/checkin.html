@@ -12,6 +12,9 @@
 		<script src="static/timepicker/lib/base.js" type="text/javascript"></script>
 		<link rel="stylesheet" type="text/css" href="static/timepicker/jquery.timepicker.css">
 		<link rel="stylesheet" type="text/css" href="static/timepicker/lib/base.css">
+		 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet" />
+
+    <link href="http://fonts.googleapis.com/css?family=Abel|Open+Sans:400,600" rel="stylesheet" />
 		<script type="text/javascript">// <![CDATA[
         function preloader(){
             document.getElementById("loading").style.display = "none";
@@ -21,7 +24,36 @@
 		// ]]></script>
 		
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<style>
+			html {
+            background: url(static/bootstrap/css/rrl2.jpg) no-repeat center center fixed; 
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
 
+        body {
+            padding-top: 20px;
+            font-size: 16px;
+            font-family: "Open Sans",serif;
+            background: transparent;
+        }
+        @import 'bootstrap.less';
+        .panel {
+            background-color: rgba(255, 255, 255, 0.9);
+            .border-radius:5px !important;
+        }
+        h2 {
+            font-family: "Abel", Arial, sans-serif;
+            font-weight: 400;
+            font-size: 31px;
+        }
+         .margin-base-vertical {
+            margin: 40px 0;
+        }
+
+		</style>
 </head>
 <body>
 	<div id="loading"></div>
@@ -33,17 +65,36 @@
 		{{end}}
 		{{body_notes}} -->
 		{% if posts.count() == 0 %}
+		<style>
+			html {
+            background: white no-repeat center center fixed; 
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        body {
+            padding-top: 20px;
+            font-size: 16px;
+            font-family: "Open Sans",serif;
+            background: transparent;
+        }
+		</style>
+			<div id="html_override">
 			<div class="container">
-				<h2 class="text-center">No groups seem to be studying for {{request.args.get('what_class2')}} {{request.args.get('section_chose2')}} right now, sorry. <small class="text-center"> Would you like to start your own? <a href="http://127.0.0.1:5000/" class="text-center text-success"> Make your own group here!</a> </small></h2>
+				<h2 class="text-center">No groups seem to be studying for {{request.args.get('what_class2')}} {{request.args.get('section_chose2')}} right now, sorry. <small class="text-center"> Would you like to start your own? <a href="http://127.0.0.1:5000/" class="text-center text-success"> Create your own group here!</a> </small></h2>
 				<br>
 				<img src="static/bootstrap/css/sad_face.jpg" alt="" class="image-responsive img-circle"></img>
-				</div>
-			
+			</div>
+			</div>
 		{% endif %}
-		<div class ="note_container">
+		<div class="container" style="border-radius:15px;">
+		<div class="row" style="border-radius:15px;">
+		<div class ="note_container panel panel-default  panel panel-default" style="border-radius:15px;" >
 		<table id="outer_box" class="table table-striped" >
 		 {% for post in posts.order_by('pub_date') %}
-		 	<tr id="tr_{{post.id}}" class="  col-md-12">
+		 	<tr id="tr_{{post.id}}" class="col-md-12" style="border-radius:15px;">
 		 		<td>
 		 		<h2>
 			 		{{post.class_area}}
@@ -51,15 +102,15 @@
 		 		</h2>
 	
 		 		<p class="lead">In: {{post.study_area}}</p>
-		 		{% if post.how_many == 10 %}
-		 		Group of: <strong>{{post.how_many}}+</strong>
+		 		{% if post.how_many >= 10 %}
+		 		Group of: <strong>10+</strong>
 		 		{%else %}
 		 		Group of: <strong>{{post.how_many}}</strong>
 		 		{% endif %}
 		 		<br>
 		 		<p class="text-primary">From: {{post.pub_date.strftime('%I:%M%p')}}
 		 		To: {{post.end.strftime('%I:%M%p')}}</p>
-		 		<div class="header"><span>Click me to expand for more info about the group!</span></div>
+		 		<div class="header"><span>Click <strong class="text-info">me</strong> to expand for more info about the group!</span></div>
 			 		<p class="toshow" style="max-width:650px">
 			 			{{post.body_notes}}
 			 		</p>
@@ -68,6 +119,8 @@
 		 	</tr>
 		 {% endfor %}
 		</table>
+		</div>
+		</div>
 		</div>
 	</div>
 </body>

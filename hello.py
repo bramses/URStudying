@@ -18,33 +18,15 @@ db = SQLAlchemy(app) #database for URStudy
 
 #------------------------------secret key here -- only for me ;)-------------------------------------
 
-# login_manager = LoginManager()
-# login_manager.init_app(app)
 
-
-# class LoginForm(Form):
-#     openid = TextField('openid', validators = [Required()])
-#     remember_me = BooleanField('remember_me', default = False)
-
-# @login_manager.user_loader
-# def load_user(userid):
-#     return User.get(int(userid))
-
-# @app.route('/edit', methods=['GET','POST'])
-# def edit():
-# 	form = LoginForm()
-# 	if form.validate_on_submit():
-# 		login_user(user)
-# 		flash('Found! Edit your posts!')
-# 		return redirect(request.args.get("next") or url_for("index"))
-# 	return render_template("edit.html", form=form)
 
 @app.route('/')#route to the home page (index.html)
 def initialize(): #initialization function for index.html, renders homepage
     return render_template("index.html") 
 
-
-
+@app.route('/FAQ')
+def faq_page():
+	return render_template("FAQ.html")
 
 @app.route('/checkin', methods=['GET','POST']) #renders check in page (the one with the DB) by using arguments given from index.html
 def checkinpage():
@@ -69,15 +51,9 @@ def checkinpage():
 	 	session['username'] = author
 	 	print(session['username'])
 	 	
-	 	
-	 	# duplicate_check_user = User.query.filter_by(fullname = author).first()
-	 	# if(duplicate_check_user is None):
-			# db.session.add(u)
-		
 
 	 	post = Post(class_area = class_area, class_is = class_is, how_many = how_many, study_area = study_area, pub_date = the_start, end =the_end, body_notes =  body_notes) #finally, adds to database
 	 	d_u = User.query.filter_by(fullname = author).first()
-	 	print(d_u)
 	 	if d_u is None:		
 	 		u = User(fullname = author)
 	 		u.posts.append(post)
@@ -100,9 +76,6 @@ def checkinpage():
 
 		posts = Post.query.filter( Post.class_area == class_area , Post.class_is == class_is ,Post.end > datetime.now()) #only pulls up data for classes relevant to user's query
 
-		# del_me = Post.query.filter(Post.end < datetime.now())
-		#db.session.delete(del_me)
-		#db.session.commit()
 
 		#uncomment this to see debug log
 		
@@ -111,7 +84,8 @@ def checkinpage():
 		# raise
 		# return 'Ohnoes' 	
 		
-		#return "Added to database!" moving over to this model later
+		return render_template("successful_entry.html", study_area = study_area) 
+		'''
 		return render_template("checkin.html",
 		 posts = posts, 
 		 class_area = class_area, 
@@ -122,6 +96,8 @@ def checkinpage():
 		 end = end,
 		 body_notes = body_notes
 		 )
+		'''
+
 	#the method to load a page if a user doesn't want to add a DB entry, but instead see current ones (work in progress)
 	elif request.method == 'GET':
 		class_area = request.args.get('what_class2') #requests data from form
@@ -135,6 +111,13 @@ def checkinpage():
 		
 		return render_template("checkin.html",  posts = posts, class_area = class_area, class_is = class_is)
 
+@app.route('/add_session', methods=['POST'])
+def add_to_session():
+	author = request.form.get('author')
+	session['username'] = author
+	return render_template('index.html')
+
+
 @app.route('/edit_posts', methods=['GET'])
 def edit_me():
 	if 'username' in session:
@@ -142,10 +125,9 @@ def edit_me():
 		print("count is:")
 		print(u.posts.count())
 		print(u.posts.filter(Post.end > datetime.now()).count())
-		posts = u.posts
-		p_test = posts.first()
-		return render_template("edit.html", posts = posts)
-	return 'Nah'
+		posts = u.posts.filter(Post.end > datetime.now())
+		return render_template("edit.html", posts = posts, user_name = escape(session['username']))
+	return render_template("no_session.html")
 
 
 @app.route('/update_post', methods=['POST'])
@@ -169,7 +151,7 @@ def update_entry():
 		posts = u.posts
 		p_id = posts.first().id
 		post_update = Post.query.get(p_id)
-		print('kewl')
+		
 
 		db.session.delete(post_update)
 		db.session.commit()

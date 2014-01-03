@@ -10,33 +10,74 @@
 		<script type="text/javascript" src="static/group.js"></script>
 
 		<script src="static/timepicker/jquery.timepicker.js" type="text/javascript"></script>
+		<script src="static/timepicker/datepair.js" type="text/javascript"></script>
 		<script src="static/timepicker/lib/base.js" type="text/javascript"></script>
 		<link rel="stylesheet" type="text/css" href="static/timepicker/jquery.timepicker.css">
 		<link rel="stylesheet" type="text/css" href="static/timepicker/lib/base.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet" />
+
+    <link href="http://fonts.googleapis.com/css?family=Abel|Open+Sans:400,600" rel="stylesheet" />
+
+
+
+		<style>
+			html {
+            background: url(static/bootstrap/css/rrl6.jpg) no-repeat center center fixed; 
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        body {
+            padding-top: 20px;
+            font-size: 16px;
+            font-family: "Open Sans",serif;
+            background: transparent;
+        }
+        @import 'bootstrap.less';
+        .panel {
+            background-color: rgba(255, 255, 255, 0.9);
+            .border-radius( 5px ) !important;
+        }
+        h3 {
+            font-family: "Abel", Arial, sans-serif;
+            font-weight: 400;
+            font-size: 33px;
+        }
+         .margin-base-vertical {
+            margin: 40px 0;
+        }
+
+		</style>
 	</head>
 	<body>
-	<div id ="outer_box" class=" pagination-centered">
+	<div class="container">
+	<div class="row">
+	<div id ="outer_box" class=" col-md-6 col-md-offset-3 pagination-centered panel panel-default" style="border-radius:5px;">
 		<div id = "init_choice" class="pagination-centered">
-			<h3>Are you looking for a study group or are you looking for people to join yours?</h3>
+			<h3 class="margin-base-vertical panel-title">Are you looking for a study group or are you looking for people to join yours?</h3>
 
 			<button id ="in_group" class="btn btn-primary btn-large pagination-centered">
-			<span class="glyphicon glyphicon-star"></span>I have a study group</button>
+			<span class="glyphicon glyphicon-star"></span>I have a study group already/I'm looking to create a study group</button>
 			<button id ="lf_group" class="btn btn-primary btn-large pagination-centered">I'm looking for a study group</button>
 			<br />
 			<br />
 
 			<form name="edit_posts" method="GET" action="/edit_posts">
-				<button class="btn btn-success btn-large pagination-centered" type="submit"> I already have a group; let me edit it!</button>
+				<button class="btn btn-success btn-large pagination-centered" type="submit"> I already made a group; let me edit it!</button>
 			</form>
 		</div>
 
 	<form name="input" method="POST" action="/checkin" >
 		<div id="what_class" class="pagination-centered toshow">
-			<p>First/last name?</p>
-			<input type="text" name='author' />
+			
+			<p class='help-block'>Name to go by?<br /><small>It doesn't have to be your real name, just something unique we can identify you by if you want to edit your group later. </small> </p>
+			<input type="text" class='form-control input-lg' name='author' placeholder='Selig-the-man26' />
+
 			<p>What subject are you studying for?</p>
-			<select id="class_selected" name="what_class">
+			<select id="class_selected" class='form-control input-lg' name="what_class" placeholder="Selig-the-man26">
 				<option value=""></option>
 				<option value="AAS">AAS - African &amp; African-American Studies</option>
 				<option value="ACC">ACC - Accounting</option>
@@ -238,17 +279,19 @@
 			</select>
 		</div>
 		<div id="section_chose" class="pagination-centered toshow">
-			<p>What section number are you in?</p>
+			<p>What course number are you in? (110, 131, 161, 207, etc.)</p>
 			<input type='text' autocomplete='off' id='section' name="section_chose" />
 			<br />
 			<button id='sub_me' class="btn btn-primary btn-small pagination-centered" type="button" > Submit </button>
+			<br />
+			<br />
 
 
 		</div>
 	
 		<div id="lib_in" class='pagination-centered toshow'>
-			<p>How many people are you studying with?</p>
-			 1 <input type="radio" name="how_many" class="how_many" value=1>
+			<p class="help-block">How many people are in your group right now <strong class='text-muted'> INCLUDING YOU</strong>?<br><small>This can be changed later if people join or leave, don't worry </small></p>
+			 Just me! <input type="radio" name="how_many" class="how_many" value=1>
 			 2 <input type="radio" name="how_many" class="how_many" value=2>
 			 3 <input type="radio" name="how_many" class="how_many" value=3>
 			 4 <input type="radio" name="how_many" class="how_many" value=4>
@@ -268,6 +311,9 @@
 			<option value='ITS -- First Floor'>IT Center -- 1st Floor</option>
 			<option value="Carlson">Carlson</option>
 			<option value='Rush Rhees Library'>Rush Rhees</option>
+			<option value='Rettner -- 2nd Floor'>Rettner -- 2nd Floor</option>
+			<option value='Rettner -- 3rd Floor'>Rettner -- 3rd Floor</option>
+			<option value='Physics &amp; Astronomy Library'>Physics &amp; Astronomy Library</option>
 			</select><br>
 		</div>
 
@@ -275,10 +321,14 @@
 		<div class='pagination-centered toshow' id="time_chose" name="time_chose">
 
 			<p id="lib_text"></p> 
-			<input type='text' id='time_start' class='time ui-timepicker-input timepicker' autocomplete='off' name="time_start" placeholder="12:00pm"> 
-			to <input type='text' name="time_end" id='time_end' class='time ui-timepicker-input timepicker2' autocomplete='off' placeholder="12:00pm">
-			<br>
+			<p class='datepair' data-language='javascript'>
+			<input type='text' id='time_start' class='time start ui-timepicker-input timepicker' autocomplete='off' name="time_start" placeholder="12:00pm"> 
+			to <input type='text' name="time_end" id='time_end' class='time end ui-timepicker-input timepicker2' autocomplete='off' placeholder="12:00pm">
+			</p>
+
 			<button id='sub_me2' class="btn btn-primary btn-small pagination-centered" type="button"> Submit </button>
+			<br />
+		
 			<img id="loading" style="display: none" src="/static/img/loadingimage.gif">
 			<br>
 			<br>
@@ -288,12 +338,15 @@
 		</div>
 
 		<div class='pagination-centered toshow' id="notes">
-			<p> Anything else to add? e.g. who to look for, any distinguishing features, certain subject material etc.</p>
+			<p> Anything else to add? e.g. who to look for, any distinguishing features, what's the maximum group size you'd like, certain subject material, chapters, professors, do you have any TAs with you, are you bringing snacks? ;) etc.</p>
 			<textarea name="notes_section" cols="25" rows="5" id="notes_section">
 			</textarea><br>
 		</div>
 		<div class='pagination-centered toshow' id="check_in_button">
 				<button id='check_in' class="btn btn-primary btn-small pagination-centered" type='submit'>Check in now</button>
+			<br />
+			<br />
+			<br />
 		</div>
 </form>
 		
@@ -502,18 +555,26 @@
 			</select>
 		</div>
 		<div id="section_chose2" class="pagination-centered toshow">
-			<p>What section are you in?<small>Numbers only, please</small></p>
+			<p>What course number are you in? (110, 131, 161, 207, etc.)</p>
 			<input type='text' autocomplete='off' id='section' name="section_chose2" />
 			<br />
-			<button id='sub_me_lf' class="btn btn-primary btn-small pagination-centered" type="submit"> Look for a group now! </button>
+			<button id='sub_me_lf' class="btn btn-primary btn-medium pagination-centered" type="submit"> Look for a group now! </button>
+			<br />
+			<br />
+			<br />
 		</div>
 		</form>
 
-	</div>
-	</div>
-	<footer class="footer">
-		<small> Made by Bram Adams <span class="glyphicon glyphicon-heart"></span>  &copy;2013</small>	
+	
+	
+
+	<footer class="footer panel-footer">
+		<small><a href="{{url_for('faq_page')}}" class='text-info'>FAQ</a> · Made by Bram Adams <span class="glyphicon glyphicon-heart text-muted"></span>  &copy;2013</small> 	
 	</footer>
+	</div>
+	</div>
+	</div>
+	</div>
 </body>
 
 
