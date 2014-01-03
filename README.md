@@ -24,7 +24,7 @@ Create a group:
 ![make-a-group](https://raw.github.com/bramses/URStudying/master/urpics/Capture6.JPG)
 
 Successful DB Entry:
-![success](https://raw.github.com/bramses/URStudying/master/urpics/Captur11.JPG)
+![success](https://raw.github.com/bramses/URStudying/master/urpics/Capture11.JPG)
 
 Example database query:
 ![group-data](https://raw.github.com/bramses/URStudying/master/urpics/Capture7.JPG)
