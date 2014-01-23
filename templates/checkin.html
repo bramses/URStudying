@@ -82,15 +82,15 @@
         }
 		</style>
 			<div id="html_override">
-			<div class="container">
+			<div class="container pagination-centered">
 				<h2 class="text-center">No groups seem to be studying for {{request.args.get('what_class2')}} {{request.args.get('section_chose2')}} right now, sorry. <small class="text-center"> Would you like to start your own? <a href="http://127.0.0.1:5000/" class="text-center text-success"> Create your own group here!</a> </small></h2>
 				<br>
-				<img src="static/bootstrap/css/sad_face.jpg" alt="" class="image-responsive img-circle"></img>
+				<img src="static/bootstrap/css/sad_face.jpg" alt="" class=""></img>
 			</div>
 			</div>
 		{% endif %}
-		<div class="container" style="border-radius:15px;">
-		<div class="row" style="border-radius:15px;">
+		<div class="container-fluid" style="border-radius:15px;">
+		<div class="row-fluid" style="border-radius:15px;">
 		<div class ="note_container panel panel-default  panel panel-default" style="border-radius:15px;" >
 		<table id="outer_box" class="table table-striped" >
 		 {% for post in posts.order_by('pub_date') %}

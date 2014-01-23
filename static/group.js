@@ -12,7 +12,7 @@ $(document).ready(function () {
   $("#sub_me").attr("disabled", "disabled");
   //$("#sub_me_lf").attr("disabled", "disabled");
 
-  
+  //turns span into input field and appends it to the parent element (<p> in this case)
   $('.size_change_class').click(function(){
   	var input = $('<input />', {
   		'type': 'text',
@@ -41,7 +41,8 @@ $(document).ready(function () {
 			}	
 		}
 	});
-     /*
+
+     /*turns input back into span. deciding if i need/want this functionality, since posting form becomes more difficult
      $('.size_change_class').blur( function () {
      	
         $(this).parent().append($('<span />').html($(this).val()));
@@ -50,8 +51,61 @@ $(document).ready(function () {
 */
   });
 
+	$('.post_table').on("change",function(){
+		var just_id = this.id;
+		just_id = just_id.split("_");
+		$('#send_id').val(just_id[1]);
+	})
 
 
+	//same as above for start time field
+  $('.start_time').click(function(){
+  	var input = $('<input />', {
+  		'type': 'text',
+  		'name': 'time_start',
+  		'id': this.id,
+  		'class': 'time start ui-timepicker-input timepicker',
+  		'autocomplete': 'off',
+  		'value': $(this).html()
+  	});
+  	 $(this).parent().append(input);
+     $(this).remove();
+     input.focus();
+
+ });
+	//same as above for end time field
+   $('.end_time').click(function(){
+  	var input = $('<input />', {
+  		'type': 'text',
+  		'name': 'time_end',
+  		'id': this.id,
+  		'class': 'time end ui-timepicker-input timepicker',
+  		'autocomplete': 'off',
+  		'value': $(this).html()
+  	});
+  	 $(this).parent().append(input);
+     $(this).remove();
+     input.focus();
+
+
+ });
+
+	$('.change_notes').click(function(){
+  	var input = $('<textarea />', {
+  		'name': 'notes_section',
+  		'id': this.id,
+  		'class': 'change_notes',
+  		//'value': $('notes_area').html()
+  		'placeholder': $.trim($(this).text().replace("Click your text to change info about your group",""))
+  	});
+  	 $(this).parent().append(input);
+     $(this).remove();
+     input.focus();
+
+    });
+
+
+	//expanding function -- expands extra info about a group
   $(".header").click(function () {
 
     $header = $(this);
@@ -68,18 +122,21 @@ $(document).ready(function () {
     });
 
 });
-  //for cancel button in edit
+
+  //for cancel button in edit posts page
   $('.cancel_section_button').click(function(){
   		
   		var answer = confirm("Are you sure you want to cancel this study group session?");
   		if(answer)
   		{
   			var retrieve_id = this.id.replace("button","");
-  			$('#' + retrieve_id).val("true"); //looking at button -- change to input 
+  			$('#' + retrieve_id).val("true"); //looking at button -- change to input
+  			var get_numerical_id = this.id.replace("cancel_section_button", "");
+  			$('#send_id').val(get_numerical_id);
   			$($(this).parent().parent()).remove();
-  			
+
   				var elements_left = document.getElementsByTagName('tr');
-  				if(elements_left[0] == undefined)
+  				if(elements_left[0] == undefined)//if zero tr elements submits form automatically
   					$('#edit_submit_form').trigger("submit");
   					
   			//.html("<p class='lead'> Removed. Click Submit Edits to finalize. <a href=''>Undo</a> </p>" );
@@ -90,7 +147,7 @@ $(document).ready(function () {
   		}
   });
 
-  
+  //first two buttons on site -- everything below saves variables and changes html
 	$("#in_group").click( function(){
 		$("#init_choice").fadeOut(); //fades out buttons
 		$("#what_class").delay(500).fadeIn();
@@ -168,6 +225,7 @@ $(document).ready(function () {
 	time_start = $('.timepicker').val();
 	time_end = $('.timepicker2').val();
 
+	//before datepair tried a hack implementation -- saving for potential future use
 	$("#time_chose").on('change', function() {
 		time_start =$('.timepicker').val();
 		time_end = $('.timepicker2').val();
@@ -221,10 +279,10 @@ $("#section").keydown(function(event) {
 		}
 	});
 
-	$("#check_in").click( function()
-	{
-		
-	});
+$("#check_in").click( function()
+{
+	
+});
 	//checks for current entries in DB for similar entries
 	function check_for_entry(classArea, class_is, end)
 	{

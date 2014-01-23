@@ -2,7 +2,7 @@
 from flask import Flask, jsonify, render_template, request, g, flash, redirect,url_for, session,escape
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager, login_user, logout_user, current_user, login_required
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask.ext.wtf import Form
 from wtforms import TextField, BooleanField
 from wtforms.validators import Required
@@ -22,7 +22,11 @@ db = SQLAlchemy(app) #database for URStudy
 
 @app.route('/')#route to the home page (index.html)
 def initialize(): #initialization function for index.html, renders homepage
-    return render_template("index.html") 
+	#do_something_wrong()
+	#raise
+	#return 'Ohnoes'
+	posts = Post.query.order_by(Post.id.desc()).limit(5)
+	return render_template("index.html", posts = posts) 
 
 @app.route('/FAQ')
 def faq_page():
@@ -49,29 +53,39 @@ def checkinpage():
 	 	check = datetime.now()
 
 	 	session['username'] = author
-	 	print(session['username'])
 	 	
+	 	if("pm" in pub_date and "am" in end):
+	 		t_end = datetime.strptime(end, "%I:%M%p")
+	 		d_end = datetime.today() + timedelta( days = 1 )
+	 		the_end = d_end.replace( hour = t_end.hour, minute = t_end.minute )
 
-	 	post = Post(class_area = class_area, class_is = class_is, how_many = how_many, study_area = study_area, pub_date = the_start, end =the_end, body_notes =  body_notes) #finally, adds to database
+
+	 	post = Post(class_area = class_area, class_is = class_is, how_many = how_many, study_area = study_area, pub_date = the_start, end = the_end, body_notes =  body_notes) #finally, adds to database
 	 	d_u = User.query.filter_by(fullname = author).first()
-	 	if d_u is None:		
+	 	if d_u is None:	#duplicate user check 
 	 		u = User(fullname = author)
 	 		u.posts.append(post)
 	 		db.session.add(u)
 	 	else:
 	 		d_u.posts.append(post)
 
-	 	duplicate_check = Post.query.filter_by( class_area  = class_area ,class_is = class_is ,body_notes = body_notes).first()
-
+	 	duplicate_check = Post.query.filter_by( class_area = class_area , class_is = class_is, how_many = how_many, study_area = study_area, body_notes =  body_notes ).first()
+	 	#test_t = Post.query.filter_by( class_area = class_area , class_is = class_is).first()
+	 	#print(test_t.body_notes)
 	 	
 	 	if(duplicate_check is None):
+	 		print('wut')
 			db.session.add(post)
 			db.session.commit()
-		elif(post.body_notes != duplicate_check.body_notes):
+		elif( post.body_notes != duplicate_check.body_notes ):
+			print('no duplicate')
 			db.session.add(u)
 			db.session.add(post)
 			db.session.commit() #commits to db
-		
+		if(duplicate_check):
+			print(duplicate_check.body_notes)
+		else:
+			print('w')
 		class_id = class_area + class_is 
 
 		posts = Post.query.filter( Post.class_area == class_area , Post.class_is == class_is ,Post.end > datetime.now()) #only pulls up data for classes relevant to user's query
@@ -79,12 +93,20 @@ def checkinpage():
 
 		#uncomment this to see debug log
 		
-		
-		# do_something_wrong()
-		# raise
-		# return 'Ohnoes' 	
-		
-		return render_template("successful_entry.html", study_area = study_area) 
+		'''
+		do_something_wrong()
+		raise
+		return 'Ohnoes' 	
+		''' 
+		return render_template("successful_entry.html", 
+		posts = posts, 
+		class_area = class_area, 
+		class_is = class_is,
+		how_many = how_many,
+		study_area = study_area,
+		pub_date = pub_date,
+		end = end,
+		body_notes = body_notes) 
 		'''
 		return render_template("checkin.html",
 		 posts = posts, 
@@ -102,9 +124,7 @@ def checkinpage():
 	elif request.method == 'GET':
 		class_area = request.args.get('what_class2') #requests data from form
 		class_is = request.args.get('section_chose2')
-		posts = Post.query.filter( Post.class_area == class_area , Post.class_is == class_is, Post.end > datetime.now()) #only pulls up data for classes relevant to user's query
-		#class_id = class_area + class_is
-		
+		posts = Post.query.filter( Post.class_area == class_area , Post.class_is == class_is, Post.end > datetime.now()) #only pulls up data for classes relevant to user's query		
 		# do_something_wrong()
 		# raise
 		# return 'Ohnoes'
@@ -124,6 +144,7 @@ def edit_me():
 		u = User.query.filter_by(fullname = escape(session['username']) ).first()
 		print("count is:")
 		print(u.posts.count())
+		print(datetime.now())
 		print(u.posts.filter(Post.end > datetime.now()).count())
 		posts = u.posts.filter(Post.end > datetime.now())
 		return render_template("edit.html", posts = posts, user_name = escape(session['username']))
@@ -132,34 +153,74 @@ def edit_me():
 
 @app.route('/update_post', methods=['POST'])
 def update_entry():
+	which_post = request.form.get('send_id') 
 	updated_how_many = request.form.get('how_many')
-	if updated_how_many is not None and updated_how_many != "0":
-		u = User.query.filter_by(fullname = escape(session['username']) ).first() #change once I get relational DB working. Right now just retreives first. Will retreive the one user is editing later. Going off assumption user will only have one group at a time anyway
-		print(u)
+	updated_body_notes = request.form.get('notes_section')
+	updated_time_start = request.form.get('time_start')
+	updated_time_end = request.form.get('time_end')
+	del_post = request.form.get('delete')
+
+	updated_time_start_str = request.form.get('time_start')
+	updated_time_end_str = request.form.get('time_end')
+
+	if updated_time_start and updated_time_end:
+		t_start = datetime.strptime(updated_time_start_str, "%I:%M%p") #these lines turn the string representations of time into timestamp objects 
+ 		t_end = datetime.strptime(updated_time_end, "%I:%M%p")
+ 		
+ 		d_start = datetime.now()
+ 		updated_time_start = d_start.replace(hour = t_start.hour, minute = t_start.minute)
+ 		
+ 		d_end = datetime.now()
+ 		updated_time_end = d_end.replace(hour = t_end.hour, minute = t_end.minute)
+
+	if("pm" in updated_time_start_str and "am" in updated_time_end_str) and updated_time_start and updated_time_end:
+		t_end = datetime.strptime(updated_time_end_str, "%I:%M%p")
+		d_end = datetime.today() + timedelta( days = 1 )
+		updated_time_end = d_end.replace( hour = t_end.hour, minute = t_end.minute )
+
+	if updated_how_many and updated_how_many != "0":
+		u = User.query.filter_by( fullname = escape(session['username']) ).first() #change once I get relational DB working. Right now just retreives first. Will retreive the one user is editing later. Going off assumption user will only have one group at a time anyway
 		posts = u.posts
-		print(u.posts.count())
 		p_id = posts.first().id
-		print(posts.first().how_many)
-		post_update = Post.query.get(p_id)
+
+		post_update = Post.query.get(which_post)
 		post_update.how_many = updated_how_many #check for 0 case
 		db.session.commit()
-
-	del_post = request.form.get('delete')
-	print(del_post)
-	if del_post == "true":
-		u = User.query.filter_by(fullname = escape(session['username']) ).first()
+	if updated_body_notes and del_post == "false":
+		u = User.query.filter_by( fullname = escape(session['username']) ).first() 
 		posts = u.posts
 		p_id = posts.first().id
-		post_update = Post.query.get(p_id)
-		
+		post_update = Post.query.get(which_post)
+		post_update.body_notes = updated_body_notes #check for 0 case
+		db.session.commit()
+	if updated_time_start and del_post == "false":
+		u = User.query.filter_by( fullname = escape(session['username']) ).first() 
+		posts = u.posts
+		p_id = posts.first().id
+		post_update = Post.query.get(which_post)
+		post_update.pub_date = updated_time_start 
+		db.session.commit()
+	if updated_time_end and del_post == "false":
+		u = User.query.filter_by( fullname = escape(session['username']) ).first() 
+		posts = u.posts
+		p_id = posts.first().id
 
+		post_update = Post.query.get(which_post)
+		post_update.end = updated_time_end 
+		db.session.commit()
+	
+	if del_post == "true":
+		u = User.query.filter_by( fullname = escape(session['username']) ).first()
+		posts = u.posts
+		p_id = posts.first().id
+		post_update = Post.query.get(which_post)
 		db.session.delete(post_update)
 		db.session.commit()
 
 	else:
 		print('nah srry yo')
 	
-	return 'Added to db!'
+	return render_template("successful_entry_edit.html")
 
 
 
@@ -241,4 +302,4 @@ class User(db.Model):
 
 #runs the program
 if __name__ == '__main__':
-	app.run(debug = True)
+	app.run(debug = True, host="0.0.0.0")
