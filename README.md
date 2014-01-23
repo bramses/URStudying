@@ -23,12 +23,17 @@ Welcome screen:
 Create a group:
 ![make-a-group](https://raw.github.com/bramses/URStudying/master/urpics/Capture6.JPG)
 
+Successful DB Entry:
+![success](https://raw.github.com/bramses/URStudying/master/urpics/Capture11.JPG)
+
 Example database query:
 ![group-data](https://raw.github.com/bramses/URStudying/master/urpics/Capture7.JPG)
 
 Edit screen (retrieved by session):
 ![edit-screen](https://raw.github.com/bramses/URStudying/master/urpics/Capture9.JPG)
 
+FAQ Page:
+![edit-screen](https://raw.github.com/bramses/URStudying/master/urpics/Capture10.JPG)
 
 
 
