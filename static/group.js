@@ -50,7 +50,23 @@ $(document).ready(function () {
     });
 */
   });
+	
 
+	$("#author_of").change(function(){
+		if($("#author_of").val() == "")
+		{
+			alert("You need to put in a name!");
+			$("#sub_me").attr("disabled", "disabled");
+		}
+		else if($("#author_of").val() == "CETL_Library_UR")
+		{
+
+		}
+		else
+		{
+			$("#sub_me").attr("disabled", "");
+		}
+	});		
 	$('.post_table').on("change",function(){
 		var just_id = this.id;
 		just_id = just_id.split("_");
@@ -170,7 +186,6 @@ $(document).ready(function () {
 
 	$("#class_selected").change(function(){
 		classArea = $('#what_class option:selected').text();
-
 	});
 
 	classArea = $('#class_selected2 option:selected').text();
@@ -212,13 +227,11 @@ $(document).ready(function () {
 		if($('#library_study option:selected').text() == "" || $("input[type=radio][name=how_many]:checked").val() == "" )
 			alert("You need to choose how many people are in your group and what library you're in!");
 		else{
-			$("#lib_text").html('How long will your group be studying in ' + study_area + '?')
+			$("#lib_text").html('When will your group be studying in ' + study_area + '?')
 			$('#time_chose').fadeIn();
 		}
 	});
 	$("#library_study").change(function(){
-		if($('#library_study option:selected').text() == "" || $("input[type=radio][name=how_many]:checked").val() == "" )
-			alert("You need to choose how many people are in your group and what library you're in!");
 		study_area = $('#library_study option:selected').text();
 	});
 
@@ -258,13 +271,7 @@ $(document).ready(function () {
 	$("#section").on('input',function(){
 		notes_took = $('#notes_section').val();
 	});
-/*
-$(function(){ //timepicker. John Thornton is a god among men. http://jonthornton.github.io/jquery-timepicker/
-	$('.timepicker').timepicker({ 'scrollDefaultNow': true });
-});
-$(function(){
-	$('.timepicker2').timepicker({ 'scrollDefaultNow': true,   });
-});/*,'minTime': time_start, 'maxTime': final_end_duration, 'showDuration': true*/
+
 
 $("#section").keydown(function(event) {
 		// Allow only backspace and delete and "h" for honors courses
@@ -281,7 +288,37 @@ $("#section").keydown(function(event) {
 
 $("#check_in").click( function()
 {
-	
+	if($("#author_of").val() == "")
+	{
+		alert("You need to put in a name!");
+		$("#check_in").attr("disabled", "disabled");
+		
+		$("#author_of").change(function(){
+			$("#check_in").prop("disabled", false);
+		});
+	}
+	else if($('#library_study option:selected').text() == "" || $("input[type=radio][name=how_many]:checked").val() == "" )
+	{
+		alert("You need to choose how many people are in your group and what library you're in!");
+		$("#check_in").attr("disabled", "disabled");
+
+		$("#library_study").change(function(){
+			$("#check_in").prop("disabled", false);
+		});
+	}
+	else if($('#what_class option:selected').text() == "" )
+	{
+		alert("You need to choose a course!");
+		$("#check_in").attr("disabled", "disabled");
+		
+		$("#class_selected").change(function(){
+			$("#check_in").prop("disabled", false);
+		});
+	} 
+	else
+	{
+		$("#check_in").prop("disabled", false);
+	}
 });
 	//checks for current entries in DB for similar entries
 	function check_for_entry(classArea, class_is, end)

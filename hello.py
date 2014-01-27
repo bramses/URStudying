@@ -19,13 +19,13 @@ db = SQLAlchemy(app) #database for URStudy
 #------------------------------secret key here -- only for me ;)-------------------------------------
 
 
-
 @app.route('/')#route to the home page (index.html)
 def initialize(): #initialization function for index.html, renders homepage
 	#do_something_wrong()
 	#raise
 	#return 'Ohnoes'
-	posts = Post.query.order_by(Post.id.desc()).limit(5)
+	posts = Post.query.filter(Post.end > datetime.now() )
+	posts = posts.order_by( Post.id.desc() ).limit(5)
 	return render_template("index.html", posts = posts) 
 
 @app.route('/FAQ')
@@ -74,19 +74,12 @@ def checkinpage():
 	 	#print(test_t.body_notes)
 	 	
 	 	if(duplicate_check is None):
-	 		print('wut')
 			db.session.add(post)
 			db.session.commit()
 		elif( post.body_notes != duplicate_check.body_notes ):
-			print('no duplicate')
 			db.session.add(u)
 			db.session.add(post)
 			db.session.commit() #commits to db
-		if(duplicate_check):
-			print(duplicate_check.body_notes)
-		else:
-			print('w')
-		class_id = class_area + class_is 
 
 		posts = Post.query.filter( Post.class_area == class_area , Post.class_is == class_is ,Post.end > datetime.now()) #only pulls up data for classes relevant to user's query
 
@@ -107,18 +100,7 @@ def checkinpage():
 		pub_date = pub_date,
 		end = end,
 		body_notes = body_notes) 
-		'''
-		return render_template("checkin.html",
-		 posts = posts, 
-		 class_area = class_area, 
-		 class_is = class_is,
-		 how_many = how_many,
-		 study_area = study_area,
-		 pub_date = pub_date,
-		 end = end,
-		 body_notes = body_notes
-		 )
-		'''
+		
 
 	#the method to load a page if a user doesn't want to add a DB entry, but instead see current ones (work in progress)
 	elif request.method == 'GET':
@@ -135,7 +117,9 @@ def checkinpage():
 def add_to_session():
 	author = request.form.get('author')
 	session['username'] = author
-	return render_template('index.html')
+	u = User.query.filter_by(fullname = escape(session['username']) ).first()
+	posts = u.posts.filter(Post.end > datetime.now())
+	return render_template('edit.html', posts = posts, user_name = escape(session['username']))
 
 
 @app.route('/edit_posts', methods=['GET'])
@@ -173,12 +157,13 @@ def update_entry():
  		d_end = datetime.now()
  		updated_time_end = d_end.replace(hour = t_end.hour, minute = t_end.minute)
 
-	if("pm" in updated_time_start_str and "am" in updated_time_end_str) and updated_time_start and updated_time_end:
-		t_end = datetime.strptime(updated_time_end_str, "%I:%M%p")
-		d_end = datetime.today() + timedelta( days = 1 )
-		updated_time_end = d_end.replace( hour = t_end.hour, minute = t_end.minute )
+ 	if updated_time_start and updated_time_end:
+		if("pm" in updated_time_start_str and "am" in updated_time_end_str):
+			t_end = datetime.strptime(updated_time_end_str, "%I:%M%p")
+			d_end = datetime.today() + timedelta( days = 1 )
+			updated_time_end = d_end.replace( hour = t_end.hour, minute = t_end.minute )
 
-	if updated_how_many and updated_how_many != "0":
+	if updated_how_many and updated_how_many != "0" and del_post == "false" and which_post:
 		u = User.query.filter_by( fullname = escape(session['username']) ).first() #change once I get relational DB working. Right now just retreives first. Will retreive the one user is editing later. Going off assumption user will only have one group at a time anyway
 		posts = u.posts
 		p_id = posts.first().id
@@ -186,21 +171,22 @@ def update_entry():
 		post_update = Post.query.get(which_post)
 		post_update.how_many = updated_how_many #check for 0 case
 		db.session.commit()
-	if updated_body_notes and del_post == "false":
+	if updated_body_notes and del_post == "false" and which_post:
 		u = User.query.filter_by( fullname = escape(session['username']) ).first() 
 		posts = u.posts
 		p_id = posts.first().id
 		post_update = Post.query.get(which_post)
 		post_update.body_notes = updated_body_notes #check for 0 case
 		db.session.commit()
-	if updated_time_start and del_post == "false":
+	if updated_time_start is not None and del_post == "false" and which_post:
+		print(updated_time_start)
 		u = User.query.filter_by( fullname = escape(session['username']) ).first() 
 		posts = u.posts
-		p_id = posts.first().id
 		post_update = Post.query.get(which_post)
 		post_update.pub_date = updated_time_start 
 		db.session.commit()
-	if updated_time_end and del_post == "false":
+
+	if updated_time_end is not None and del_post == "false" and which_post:
 		u = User.query.filter_by( fullname = escape(session['username']) ).first() 
 		posts = u.posts
 		p_id = posts.first().id
@@ -209,7 +195,7 @@ def update_entry():
 		post_update.end = updated_time_end 
 		db.session.commit()
 	
-	if del_post == "true":
+	if del_post == "true" and which_post:
 		u = User.query.filter_by( fullname = escape(session['username']) ).first()
 		posts = u.posts
 		p_id = posts.first().id
@@ -235,8 +221,6 @@ def check_for_entry():
 	t_end = datetime.strptime(end, "%I:%M%p")
 	d_end = datetime.now()
 	end = d_end.replace(hour = t_end.hour, minute = t_end.minute)	
-	print(class_area)
-	print(class_is)
 	checks =  Post.query.filter( Post.class_area == class_area , Post.class_is == class_is, Post.end > datetime.now())
 	return str(checks.count())
 
