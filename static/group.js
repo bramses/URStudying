@@ -352,5 +352,6 @@ $("#check_in").click( function()
 
 	}
 
+
 });
 

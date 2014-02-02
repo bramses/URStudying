@@ -60,8 +60,11 @@
 				<p> We didn't find any username for you on our database. You can make one in the make a study group page back at the home page <a href="http://127.0.0.1:5000/">here.</a><p>
 				<h3> Or, reuse an old one here(press enter to submit)...</h3>
 				<form action='/add_session' method='POST' class='margin-base-vertical'>
-					<input type='text' class='form-control input-lg' name='author' placeholder='Selig-the-man26' />
+					<input type='text' class='form-control input-lg' name='author' id="session_nm" placeholder='Selig-the-man26' />
 				</form>	
+					{% if result %}
+					<span>{{result}}</span>
+					{%  endif %}
 				</div>
 			</div>
 		</div>		

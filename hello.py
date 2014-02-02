@@ -17,6 +17,7 @@ app.config.from_object('config') #retrieves db data from the config.py file
 db = SQLAlchemy(app) #database for URStudy
 
 #------------------------------secret key here -- only for me ;)-------------------------------------
+app.secret_key = '\xb2\x10.&\xf3\x19;\x08\xc5Z\x9b\xf5\x91Ws\xbfM\xfb\x8d(\xf8\xb6\xd9\xc1'
 
 
 @app.route('/')#route to the home page (index.html)
@@ -118,6 +119,8 @@ def add_to_session():
 	author = request.form.get('author')
 	session['username'] = author
 	u = User.query.filter_by(fullname = escape(session['username']) ).first()
+	if u is None:
+		return render_template("no_session.html", result="Username not found")
 	posts = u.posts.filter(Post.end > datetime.now())
 	return render_template('edit.html', posts = posts, user_name = escape(session['username']))
 
@@ -125,13 +128,10 @@ def add_to_session():
 @app.route('/edit_posts', methods=['GET'])
 def edit_me():
 	if 'username' in session:
-		u = User.query.filter_by(fullname = escape(session['username']) ).first()
-		print("count is:")
-		print(u.posts.count())
-		print(datetime.now())
-		print(u.posts.filter(Post.end > datetime.now()).count())
-		posts = u.posts.filter(Post.end > datetime.now())
-		return render_template("edit.html", posts = posts, user_name = escape(session['username']))
+		u = User.query.filter_by(fullname = escape(session['username']) ).first()	
+		if u:
+			posts = u.posts.filter(Post.end > datetime.now())
+			return render_template("edit.html", posts = posts, user_name = escape(session['username']))
 	return render_template("no_session.html")
 
 
@@ -286,4 +286,4 @@ class User(db.Model):
 
 #runs the program
 if __name__ == '__main__':
-	app.run(debug = True, host="0.0.0.0")
+	app.run(host="0.0.0.0")
