@@ -286,4 +286,4 @@ class User(db.Model):
 
 #runs the program
 if __name__ == '__main__':
-	app.run()
+	app.run(debug = True)
