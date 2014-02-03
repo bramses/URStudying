@@ -338,7 +338,7 @@ $("#check_in").click( function()
 				$('#other_groups').html('There are  group(s) studying ' + classArea[0] + ' ' + class_is + ' already. Would you like to look at these groups? ');
 				$('#other_groups').append("<br><button id='sure' type='button' class='btn btn-success btn-small pagination-centered'>Sure!</button> <button id='no_thanks' type='button' class='btn btn-danger btn-small pagination-centered'>No thanks -- I'll make my own</button>");
 				$('#sure').click(function(){
-					window.location.replace('http://127.0.0.1:5000/checkin?what_class2=' + classArea[0] + '&section_chose2=' + class_is)
+					window.location.replace('/checkin?what_class2=' + classArea[0] + '&section_chose2=' + class_is)
 				});
 				$('#no_thanks').click(function(){
 					$('#other_groups').hide()
