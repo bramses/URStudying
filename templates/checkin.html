@@ -108,8 +108,8 @@
 		 		Group of: <strong>{{post.how_many}}</strong>
 		 		{% endif %}
 		 		<br>
-		 		<p class="text-primary">From: {{post.pub_date.strftime('%I:%M%p')}}
-		 		To: {{post.end.strftime('%I:%M%p')}}</p>
+		 		<p class="text-primary">From: {{post.pub_date.strftime('%m/%d/%y %I:%M%p')}}
+		 		To: {{post.end.strftime('%m/%d/%y %I:%M%p')}}</p>
 		 		<div class="header"><span>Click <strong class="text-info">me</strong> to expand for more info about the group!</span></div>
 			 		<p class="toshow" style="max-width:650px">
 			 			{{post.body_notes}}
