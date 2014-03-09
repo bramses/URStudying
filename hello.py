@@ -17,7 +17,6 @@ app.config.from_object('config') # #retrieves db data from the config.py file
 db = SQLAlchemy(app) #database for URStudy
 
 #------------------------------secret key here -- only for me ;)-------------------------------------
-app.secret_key = '\xb2\x10.&\xf3\x19;\x08\xc5Z\x9b\xf5\x91Ws\xbfM\xfb\x8d(\xf8\xb6\xd9\xc1'
 
 
 @app.route('/')#route to the home page (index.html)
